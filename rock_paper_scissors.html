@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+   <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f4f4f4;
+        }
+
+        h3 {
+            font-size: 28px;
+        }
+
+        .game {
+            background-color: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .emoji {
+            border: 2px solid #000;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            object-fit: contain;
+            transition: transform 0.2s;
+        }
+
+        button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover .emoji {
+            transform: scale(1.1);
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .score {
+            background-color: #7d7dd8;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 85px;
+        }
+
+        .score h4 {
+            margin: 0 0 10px;
+        }
+
+        .score p {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        #restart {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        #restart:hover {
+            background-color: #1d4ed8;
+        }
+    </style> 
+</head>
+<body>
+    <h3>Rock Paper Scissors</h3>
+    <button onclick="playGame('rock')"><img class="emoji" src="./images/rock-emoji.png" alt=""></button>
+    <button onclick="playGame('paper')"><img class="emoji" src="./images/paper-emoji.png" alt=""></button>
+    <button onclick="playGame('scissors')"><img class="emoji" src="./images/scissors-emoji.png" alt=""></button>
+    <p id="result"></p>
+
+
+        <div class="scoreboard">
+            <div class="score">
+                <h4>Your Wins</h4>
+                <p id="playerScore">0</p>
+            </div>
+
+            <div class="score">
+                <h4>Computer Wins</h4>
+                <p id="computerScore">0</p>
+            </div>
+
+            <div class="score">
+                <h4>Ties</h4>
+                <p id="tieScore">0</p>
+            </div>
+        </div>
+
+        <button id="restart" onclick="restartGame()">
+            Restart Game
+        </button>
+    </div>
+   
+</body>
+<script>
+
+        let playerScore = 0;
+        let computerScore = 0;
+        let tieScore = 0;
+
+        function playGame(userChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+            let result = '';
+
+            if (userChoice === computerChoice) {
+                result = "It's a tie!";
+                tieScore++;
+            } else if (
+                (userChoice === 'rock' && computerChoice === 'scissors') ||
+                (userChoice === 'paper' && computerChoice === 'rock') ||
+                (userChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                result = "You win!";
+                playerScore++;
+            } else {
+                result = "You lose!";
+                computerScore++;
+            }
+                document.getElementById('result').innerText =
+                `You chose ${userChoice}, computer chose ${computerChoice}. ${result}`;
+
+            updateScoreboard();
+        }
+
+        function updateScoreboard() {
+            document.getElementById('playerScore').innerText = playerScore;
+            document.getElementById('computerScore').innerText = computerScore;
+            document.getElementById('tieScore').innerText = tieScore;
+        }
+
+        function restartGame() {
+            playerScore = 0;
+            computerScore = 0;
+            tieScore = 0;
+
+            updateScoreboard();
+
+            document.getElementById('result').innerText =
+                "Game restarted! Make your first move.";
+        }
+
+</script>
+</html>
